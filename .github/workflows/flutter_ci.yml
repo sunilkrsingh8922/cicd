@@ -22,6 +22,8 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.8.1' # set your Flutter version
+          distribution: 'zulu'
+          java-version: '21.0.1'
 
       - name: Install dependencies
         run: flutter pub get
