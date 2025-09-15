@@ -17,19 +17,19 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
-          distribution: 'zulu'
+          distribution: 'zulu '
           java-version: '17'
 
       # ✅ Setup Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.6' # ← Match your local "flutter --version"
+          flutter-version: '3.22.6 ' # ← Match your local "flutter --version"
           cache: true
 
       # ✅ Accept Android SDK licenses
       - name: Accept Android SDK Licenses
-        run: yes | sdkmanager --licenses || true
+        run: yes | sdkmanager --licenses ||  true
 
       # ✅ Get dependencies
       - name: Install dependencies
