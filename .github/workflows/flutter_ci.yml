@@ -18,12 +18,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # ✅ Install Java for Android build
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'   # Use 17 (required for AGP 8+)
+
+      # ✅ Install Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.8.1' # set your Flutter version
-          distribution: 'zulu'
-          java-version: '21.0.1'
+          flutter-version: '3.8.1' # Or match your local version
 
       - name: Install dependencies
         run: flutter pub get
