@@ -2,14 +2,9 @@ name: Flutter CI
 
 on:
   pull_request:
-    branches:
-      - main
-      - master
+    branches: [ main, master ]
   push:
-    branches:
-      - main
-      - master
-      - develop
+    branches: [ main, master, develop ]
 
 jobs:
   build:
@@ -18,28 +13,40 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # ✅ Install Java for Android build
+      # ✅ Setup Java for Android build
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
-          java-version: '17'   # Use 17 (required for AGP 8+)
+          java-version: '17'
 
-      # ✅ Install Flutter
+      # ✅ Setup Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.8.1' # Or match your local version
+          flutter-version: '3.22.6' # ← Match your local "flutter --version"
+          cache: true
 
+      # ✅ Accept Android SDK licenses
+      - name: Accept Android SDK Licenses
+        run: yes | sdkmanager --licenses || true
+
+      # ✅ Get dependencies
       - name: Install dependencies
         run: flutter pub get
+
+      # ✅ Run analyzer & tests
+      - name: Analyze
+        run: flutter analyze
 
       - name: Run tests
         run: flutter test
 
+      # ✅ Build APK (release)
       - name: Build APK
         run: flutter build apk --release
 
+      # ✅ Upload APK artifact
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
